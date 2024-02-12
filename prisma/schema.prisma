@@ -11,11 +11,34 @@ datasource db {
   // directUrl = env("DIRECT_URL")
 }
 
-model Pool {
+model Poll {
   id        String   @id @default(uuid())
   title     String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
-  // @@map("pools")
+  options PollOption[]
+  vote    Vote[]
+}
+
+model PollOption {
+  id     String @id @default(uuid())
+  pollId String
+  title  String
+  vote   Vote[]
+
+  poll Poll @relation(fields: [pollId], references: [id])
+}
+
+model Vote {
+  id           Int      @id @default(autoincrement())
+  sessionId    String
+  pollId       String
+  pollOptionId String
+  createdAt    DateTime @default(now())
+
+  poll       Poll       @relation(fields: [pollId], references: [id])
+  pollOption PollOption @relation(fields: [pollOptionId], references: [id])
+
+  @@unique([sessionId, pollId])
 }

@@ -12,5 +12,20 @@ POST {{host}}/polls
 Content-Type: {{contentType}}
 
 {
-  "title": "Poll title"
+  "title": "Qual o melhor framework Node.js?",
+  "options": ["Express", "Fastify", "NestJS", "HappyJS"]
+}
+
+### Retrieve a Poll
+
+GET {{host}}/polls/b6fd24a7-a58d-41cb-9fff-bb66b92613a7
+Content-Type: {{contentType}}
+
+### Vote on a Poll
+
+POST {{host}}/polls/b6fd24a7-a58d-41cb-9fff-bb66b92613a7/votes
+Content-Type: {{contentType}}
+
+{
+  "pollOptionId": "ef173f1f-0f49-42b4-9523-7f8f3cccc369"
 }

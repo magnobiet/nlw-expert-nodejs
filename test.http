@@ -16,16 +16,31 @@ Content-Type: {{contentType}}
   "options": ["Express", "Fastify", "NestJS", "HappyJS"]
 }
 
+### Get all Polls
+
+GET {{host}}/polls
+Content-Type: {{contentType}}
+
+### Get all Polls (paged)
+
+GET {{host}}/polls?skip=0&take=2
+Content-Type: {{contentType}}
+
 ### Retrieve a Poll
 
-GET {{host}}/polls/b6fd24a7-a58d-41cb-9fff-bb66b92613a7
+GET {{host}}/polls/d598f6dd-ffa3-4654-83b2-733c2ab00685
+Content-Type: {{contentType}}
+
+### Delete a Poll
+
+DELETE {{host}}/polls/de9abd8d-a7b5-4380-b687-927f413fcbfd
 Content-Type: {{contentType}}
 
 ### Vote on a Poll
 
-POST {{host}}/polls/b6fd24a7-a58d-41cb-9fff-bb66b92613a7/votes
+POST {{host}}/polls/d598f6dd-ffa3-4654-83b2-733c2ab00685/votes
 Content-Type: {{contentType}}
 
 {
-  "pollOptionId": "ef173f1f-0f49-42b4-9523-7f8f3cccc369"
+  "pollOptionId": "23dbd4fd-c0ee-4a22-99c6-079d0b70ae09"
 }

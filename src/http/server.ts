@@ -5,7 +5,9 @@ import "dotenv/config";
 import fastify from "fastify";
 import { ENV } from "../lib/env";
 import { index } from "./routes";
+import { pollsIndex } from "./routes/poll";
 import { createPoll } from "./routes/poll/create";
+import { destroyPoll } from "./routes/poll/destroy";
 import { showPoll } from "./routes/poll/show";
 import { voteOnPoll } from "./routes/poll/vote";
 import { pollResults } from "./ws/poll-results";
@@ -21,8 +23,11 @@ app.register(websocket);
 
 // Routes
 app.register(index);
+
+app.register(pollsIndex);
 app.register(createPoll);
 app.register(showPoll);
+app.register(destroyPoll);
 app.register(voteOnPoll);
 app.register(pollResults);
 

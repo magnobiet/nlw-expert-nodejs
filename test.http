@@ -1,0 +1,16 @@
+@host = http://localhost:3333
+@contentType = application/json
+
+### Index
+
+GET {{host}}/
+Content-Type: {{contentType}}
+
+### Create a new Poll
+
+POST {{host}}/polls
+Content-Type: {{contentType}}
+
+{
+  "title": "Poll title"
+}

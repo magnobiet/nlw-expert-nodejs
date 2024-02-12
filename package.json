@@ -1,0 +1,25 @@
+{
+  "name": "polls",
+  "version": "1.0.0",
+  "description": "Polls API",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/http/server.ts",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "keywords": [],
+  "author": "Magno Fernando Brixner Biét <magno.biet@gmail.com> (https://magnobiet.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "prisma": "^5.9.1",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.9.1",
+    "fastify": "^4.26.0",
+    "zod": "^3.22.4"
+  }
+}

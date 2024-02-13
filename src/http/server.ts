@@ -1,10 +1,11 @@
 import type { FastifyCookieOptions } from "@fastify/cookie";
 import cookie from "@fastify/cookie";
+import cors from "@fastify/cors";
 import websocket from "@fastify/websocket";
 import "dotenv/config";
 import fastify from "fastify";
 import { ENV } from "../lib/env";
-import { index } from "./routes";
+import { root } from "./routes";
 import { pollsIndex } from "./routes/poll";
 import { createPoll } from "./routes/poll/create";
 import { destroyPoll } from "./routes/poll/destroy";
@@ -21,8 +22,10 @@ app.register(cookie, {
 
 app.register(websocket);
 
+app.register(cors, { origin: true });
+
 // Routes
-app.register(index);
+app.register(root);
 
 app.register(pollsIndex);
 app.register(createPoll);

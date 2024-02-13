@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 
-export async function index(app: FastifyInstance) {
+export async function root(app: FastifyInstance) {
   app.get("/", () => {
-    return { response: "Polls API" };
+    return { data: "Polls API" };
   });
 }

@@ -1,0 +1,22 @@
+meta {
+  name: Update user
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{host}}/users/{{userId}}
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "{{name}}"
+  }
+}
+
+vars:pre-request {
+  userId: a85f007c-1b14-4822-8903-e0ca7dac02ba
+  name: Magno
+}

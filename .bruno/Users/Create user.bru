@@ -1,0 +1,23 @@
+meta {
+  name: Create user
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{host}}/users
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "{{name}}",
+    "email": "{{email}}"
+  }
+}
+
+vars:pre-request {
+  name: Magno
+  email: magno.biet+3@gmail.com
+}

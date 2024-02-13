@@ -5,12 +5,13 @@ import websocket from "@fastify/websocket";
 import "dotenv/config";
 import fastify from "fastify";
 import { ENV } from "../lib/env";
-import { root } from "./routes";
 import { pollsIndex } from "./routes/poll";
 import { createPoll } from "./routes/poll/create";
 import { destroyPoll } from "./routes/poll/destroy";
 import { showPoll } from "./routes/poll/show";
 import { voteOnPoll } from "./routes/poll/vote";
+import { root } from "./routes/root";
+import { usersRoute } from "./routes/users";
 import { pollResults } from "./ws/poll-results";
 
 const app = fastify();
@@ -26,6 +27,8 @@ app.register(cors, { origin: true });
 
 // Routes
 app.register(root);
+
+app.register(usersRoute);
 
 app.register(pollsIndex);
 app.register(createPoll);

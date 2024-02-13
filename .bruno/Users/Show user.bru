@@ -1,0 +1,15 @@
+meta {
+  name: Show user
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{host}}/users/{{userId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  userId: 6d0a31ae-093c-4a8f-b57a-c77491400709
+}

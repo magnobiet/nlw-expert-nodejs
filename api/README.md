@@ -8,6 +8,8 @@
 | - | - |
 | ![Screenshot Bruno](screenshot-bruno.png) | ![Screenshot WebSocket](screenshot-websocket.png) |
 
+![Screenshot Browser](screenshot-browser.png)
+
 ## Material complementar
 
 - [NLW 14: Expert](https://efficient-sloth-d85.notion.site/NLW-14-Expert-9e11ff472de64b08a5f9e277a20c3ecc)

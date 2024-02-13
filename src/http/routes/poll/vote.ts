@@ -1,4 +1,3 @@
-import { randomUUID } from "crypto";
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 import { prisma } from "../../../lib/prisma";
@@ -19,55 +18,47 @@ export async function voteOnPoll(app: FastifyInstance) {
     async (request: FastifyRequest, reply: FastifyReply) => {
       const voteOnPollParams = z.object({ pollId: z.string().uuid() });
       const voteOnPollBody = z.object({ pollOptionId: z.string().uuid() });
+      const voteOnPollHeaders = z.object({ authorization: z.string().uuid() });
 
+      const { authorization } = voteOnPollHeaders.parse(request.headers);
       const { pollId } = voteOnPollParams.parse(request.params);
       const { pollOptionId } = voteOnPollBody.parse(request.body);
 
-      let { sessionId } = request.cookies;
+      const user = await prisma.user.findUnique({
+        where: { id: authorization, deletedAt: null },
+        select: { id: true },
+      });
 
-      if (sessionId) {
-        const previousUserVoteOnPoll = await prisma.vote.findUnique({
-          where: { sessionId_pollId: { sessionId, pollId } },
-        });
-
-        if (
-          previousUserVoteOnPoll &&
-          previousUserVoteOnPoll.pollOptionId !== pollOptionId
-        ) {
-          await prisma.vote.delete({
-            where: { id: previousUserVoteOnPoll.id },
-          });
-
-          const votes = await redis.zincrby(
-            pollId,
-            -1,
-            previousUserVoteOnPoll.pollOptionId
-          );
-
-          publishVote(
-            pollId,
-            previousUserVoteOnPoll.pollOptionId,
-            Number(votes)
-          );
-        } else if (previousUserVoteOnPoll) {
-          return reply
-            .status(400)
-            .send({ message: "You already voted on this poll" });
-        }
+      if (!authorization || authorization !== user?.id) {
+        return reply.status(401).send({ message: "Unauthorized" });
       }
 
-      if (!sessionId) {
-        sessionId = randomUUID();
+      const previousUserVoteOnPoll = await prisma.vote.findUnique({
+        where: { userId_pollId: { userId: authorization, pollId } },
+      });
 
-        reply.setCookie("sessionId", sessionId, {
-          path: "/",
-          maxAge: 60 * 60 * 24 * 30, // 30 days
-          signed: true,
-          httpOnly: true,
-        });
+      if (
+        previousUserVoteOnPoll &&
+        previousUserVoteOnPoll.pollOptionId !== pollOptionId
+      ) {
+        await prisma.vote.delete({ where: { id: previousUserVoteOnPoll.id } });
+
+        const votes = await redis.zincrby(
+          pollId,
+          -1,
+          previousUserVoteOnPoll.pollOptionId
+        );
+
+        publishVote(pollId, previousUserVoteOnPoll.pollOptionId, Number(votes));
+      } else if (previousUserVoteOnPoll) {
+        return reply
+          .status(400)
+          .send({ message: "You already voted on this poll" });
       }
 
-      await prisma.vote.create({ data: { sessionId, pollId, pollOptionId } });
+      await prisma.vote.create({
+        data: { userId: authorization, pollId, pollOptionId },
+      });
 
       const votes = await redis.zincrby(pollId, 1, pollOptionId);
 

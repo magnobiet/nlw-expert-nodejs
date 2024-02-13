@@ -1,0 +1,23 @@
+meta {
+  name: Vote on a poll
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{host}}/polls/{{pollId}}/votes
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "pollOptionId": "{{pollOptionId}}"
+  }
+  
+}
+
+vars:pre-request {
+  pollId: 0653df6f-88dd-4b61-8346-8684591dc560
+  pollOptionId: b745b54b-0e38-4982-8257-62dff5c9d6b8
+}

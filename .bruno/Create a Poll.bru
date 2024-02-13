@@ -1,0 +1,23 @@
+meta {
+  name: Create a Poll
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/polls
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "title": "Qual o melhor API client?",
+    "options": [
+      "Postman",
+      "Insomnia",
+      "HTTPie",
+      "Bruno"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+meta {
+  name: List polls (paginated)
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{host}}/polls?skip=0&take=1
+  body: none
+  auth: none
+}
+
+query {
+  skip: 0
+  take: 1
+}

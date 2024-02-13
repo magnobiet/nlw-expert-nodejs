@@ -1,0 +1,15 @@
+meta {
+  name: Get a poll
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{host}}/polls/{{pollId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  pollId: 6a4bd6c9-1a0f-4dfe-85c5-2b2dda665f09
+}

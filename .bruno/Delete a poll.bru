@@ -1,0 +1,15 @@
+meta {
+  name: Delete a poll
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{host}}/polls/{{pollId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  pollId: abf656cb-db36-4243-bf9d-8e66e0cbd35d
+}
